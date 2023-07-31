@@ -69,15 +69,12 @@ export const updateBlog = asyncHandler(async (req, res) => {
 export const deleteBlog = asyncHandler(async (req, res) => {
     const blogId = req.params.id;
 
-    // Check if the blog exists in the database
-    const existingBlog = await Blog.findById(blogId);
+    // Find the blog in the database by its ID and delete it
+    const deletedBlog = await Blog.findOneAndDelete({ _id: blogId });
 
-    if (!existingBlog) {
+    if (!deletedBlog) {
         throw new CustomError("Blog not found", 404);
     }
-
-    // Delete the blog
-    await existingBlog.remove();
 
     res.status(200).json({
         success: true,
