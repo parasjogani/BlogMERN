@@ -8,3 +8,5 @@ const router = express.Router()
 router.post("/signup", signUp)
 router.post("/login", login)
 router.post("/logout", isLoggedIn, logout)
+
+export default router
