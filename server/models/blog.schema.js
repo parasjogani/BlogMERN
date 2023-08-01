@@ -24,6 +24,11 @@ const blogSchema = mongoose.Schema(
             type: String,
             required: [true, 'Full blog detail is required'],
         },
+        author: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
     },
     {
         timestamps: true
