@@ -12,8 +12,15 @@ const addBlog = async (blogData) => {
     return response.data
 }
 
+const getAllBlog = async () => {
+    const response = await axios.get(`${base_url}blog`)
+
+    return response.data
+}
+
 const blogService = {
     addBlog,
+    getAllBlog,
 }
 
 export default blogService

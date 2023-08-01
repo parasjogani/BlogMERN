@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 
 const MyBlogs = () => {
-  return (
-    <div>MyBlogs</div>
-  )
+    return (
+        <div>MyBlogs</div>
+    )
 }
 
 export default MyBlogs

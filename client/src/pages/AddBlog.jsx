@@ -26,7 +26,6 @@ const AddBlog = () => {
   };
 
   const blogstate = useSelector((state) => state)
-  console.log(blogstate);
   const { addedBlogs, isLoading, isError, isSuccess } = blogstate.blog
 
   useEffect(() => {

@@ -12,6 +12,17 @@ export const addBlogs = createAsyncThunk(
     }
 )
 
+export const getAllBlogs = createAsyncThunk(
+    'blog/get-allblogs',
+    async (thunkAPI) => {
+        try {
+            return await blogService.getAllBlog()
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+)
+
 export const resetState = createAction("ResetState")
 
 const initialState = {
@@ -43,7 +54,23 @@ export const blogSlice = createSlice({
                 state.isSuccess = false
                 state.message = action.error
             })
-            // .addCase(resetState, () => initialState)
+
+            .addCase(getAllBlogs.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllBlogs.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isError = false
+                state.isSuccess = true
+                state.allBlogs = action.payload
+            })
+            .addCase(getAllBlogs.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.isSuccess = false
+                state.message = action.error
+            })
+            .addCase(resetState, () => initialState)
 
     }
 })
