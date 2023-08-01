@@ -30,7 +30,7 @@ const Header = () => {
                                 <Link to="/addBlog">Add Blog</Link>
                             </li>
                             <li className='bg-black px-8 py-3 rounded-md'>
-                                <Link to="/myBlog">My Blog</Link>
+                                <Link to="/myblogs">My Blog</Link>
                             </li>
                             <li className='bg-black px-8 py-3 rounded-md'>
                                 <button onClick={handleLogout}>Logout</button>

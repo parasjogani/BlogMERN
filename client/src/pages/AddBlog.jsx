@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signup } from '../features/auth/authSlice';
+import { addBlogs } from '../features/blog/blogSlice';
 import PageAuth from '../component/PageAuth';
 
 const AddBlog = () => {
@@ -9,12 +9,12 @@ const AddBlog = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     title: "",
-    url: "",
-    sdescription: "",
-    description: "",
+    imageUrl: "",
+    shortDescription: "",
+    fullBlogDetail: "",
   });
 
-  const { title, url, sdescription, description } = formData;
+  const { title, imageUrl, shortDescription, fullBlogDetail } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,19 +22,20 @@ const AddBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signup(formData))
+    dispatch(addBlogs(formData))
   };
 
-  const authstate = useSelector((state) => state)
-  const { user, isLoading, isError, isSuccess } = authstate.auth
+  const blogstate = useSelector((state) => state)
+  console.log(blogstate);
+  const { addedBlogs, isLoading, isError, isSuccess } = blogstate.blog
 
   useEffect(() => {
-    if (isSuccess && user) {
-      navigate("/")
+    if (isSuccess && addedBlogs) {
+      navigate("/myblogs")
     } else {
       navigate("")
     }
-  }, [user, isLoading, isError, isSuccess, navigate])
+  }, [addedBlogs, isLoading, isError, isSuccess, navigate])
 
 
   return (
@@ -66,9 +67,9 @@ const AddBlog = () => {
                 Image Url
               </label>
               <input
-                name="url"
+                name="imageUrl"
                 type="text"
-                value={url}
+                value={imageUrl}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md sm:text-sm"
@@ -80,9 +81,9 @@ const AddBlog = () => {
                 Short Description
               </label>
               <input
-                name="sdescription"
+                name="shortDescription"
                 type="text"
-                value={sdescription}
+                value={shortDescription}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md sm:text-sm"
@@ -91,9 +92,9 @@ const AddBlog = () => {
             </div>
             <div>
               <textarea
-                name="description"
+                name="fullBlogDetail"
                 type="text"
-                value={description}
+                value={fullBlogDetail}
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md sm:text-sm"
