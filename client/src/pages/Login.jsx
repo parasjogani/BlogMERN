@@ -1,7 +1,37 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const { email, password } = formData;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(login(formData))
+  };
+
+  const authstate = useSelector((state) => state)
+  const { user, isLoading, isError, isSuccess } = authstate.auth
+
+  useEffect(() => {
+    if (isSuccess && user) {
+      navigate("/")
+    } else {
+      navigate("")
+    }
+  }, [user, isLoading, isError, isSuccess, navigate])
+
   return (
     <div className="md:h-[82vh] h-[82vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full rounded-md space-y-8 p-10 bg-[#393939]">
@@ -10,7 +40,7 @@ const Login = () => {
             Login
           </h2>
         </div>
-        <form className="mt-8 space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-5">
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -20,7 +50,8 @@ const Login = () => {
                 id="email-address"
                 name="email"
                 type="email"
-                autoComplete="email"
+                value={email}
+                onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md sm:text-sm"
                 placeholder="Email address"
@@ -34,7 +65,8 @@ const Login = () => {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="current-password"
+                value={password}
+                onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md sm:text-sm"
                 placeholder="Password"
