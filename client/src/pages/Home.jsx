@@ -7,10 +7,10 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllBlogs());
-  }, []);
+  }, [dispatch]);
 
   const blogstate = useSelector((state) => state);
-  const { allBlogs, isLoading, isError, isSuccess } = blogstate.blog;
+  const { allBlogs, isLoading, isError } = blogstate.blog;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-4 text-center">

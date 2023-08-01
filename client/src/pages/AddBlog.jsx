@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBlogs } from '../features/blog/blogSlice';
 import PageAuth from '../component/PageAuth';
@@ -12,6 +12,7 @@ const AddBlog = () => {
     imageUrl: "",
     shortDescription: "",
     fullBlogDetail: "",
+    author: "",
   });
 
   const { title, imageUrl, shortDescription, fullBlogDetail } = formData;
@@ -20,12 +21,19 @@ const AddBlog = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const user = useSelector((state) => state.auth.user.user);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(addBlogs(formData))
+    const formDataWithAuthor = {
+      ...formData,
+      author: user._id,
+    };
+    dispatch(addBlogs(formDataWithAuthor))
   };
 
   const blogstate = useSelector((state) => state)
+
   const { addedBlogs, isLoading, isError, isSuccess } = blogstate.blog
 
   useEffect(() => {

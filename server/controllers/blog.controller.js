@@ -5,9 +5,9 @@ import CustomError from "../utils/customError.js";
 
 // Add Blog
 export const addBlog = asyncHandler(async (req, res) => {
-    const { title, imageUrl, shortDescription, fullBlogDetail } = req.body;
+    const { title, imageUrl, shortDescription, fullBlogDetail, author } = req.body;
 
-    if (!title || !imageUrl || !shortDescription || !fullBlogDetail) {
+    if (!title || !imageUrl || !shortDescription || !fullBlogDetail || !author) {
         throw new CustomError("Please fill all details", 400);
     }
 
@@ -16,6 +16,7 @@ export const addBlog = asyncHandler(async (req, res) => {
         imageUrl,
         shortDescription,
         fullBlogDetail,
+        author,
     });
 
     res.status(201).json({
@@ -31,6 +32,17 @@ export const getAllBlogs = asyncHandler(async (_req, res) => {
     res.status(200).json({
         success: true,
         blogs: allBlogs,
+    });
+});
+
+// Get All Blogs By AuthorID
+export const getAllBlogsByAuthorId = asyncHandler(async (req, res) => {
+    const { authorId } = req.params
+    const allAuthorBlogs = await Blog.find({ author: authorId });
+
+    res.status(200).json({
+        success: true,
+        blogs: allAuthorBlogs,
     });
 });
 
