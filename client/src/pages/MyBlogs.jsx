@@ -50,7 +50,7 @@ const MyBlogs = () => {
                 allBlogsByAuthor.blogs.map((blog, index) => (
                     <div key={blog._id} className="blog-container bg-[#393939] p-4 rounded-lg shadow-md">
                         <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
-                        {blog.imageUrl && <img src={blog.imageUrl} alt={blog.title} className="mb-2 rounded-md" />}
+                        {blog.imageUrl && <img src={blog.imageUrl} alt={blog.title} className="mb-2 ml-3 rounded-md h-[250px] w-[400px]" />}
                         <p className="mb-4">{blog.shortDescription}</p>
                         <div className="overflow-y-auto max-h-32">{blog.fullBlogDetail}</div>
                         <button className="w-full flex justify-center py-2 px-4 mt-3 text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-600">Read</button>
