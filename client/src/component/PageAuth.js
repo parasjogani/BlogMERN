@@ -6,9 +6,14 @@ const PageAuth = (WrappedComponent) => {
         const navigate = useNavigate();
 
         useEffect(() => {
-            const token = localStorage.getItem('user');
-            if (!token) {
+            const userString = localStorage.getItem('user');
+            if (!userString) {
                 navigate('/login');
+            } else {
+                const user = JSON.parse(userString);
+                if (!user || !user.token) {
+                    navigate('/login');
+                }
             }
         }, [navigate]);
 

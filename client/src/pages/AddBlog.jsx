@@ -21,13 +21,13 @@ const AddBlog = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const user = useSelector((state) => state.auth.user.user);
+  const user = useSelector((state) => state.auth.user?.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataWithAuthor = {
       ...formData,
-      author: user._id,
+      author: user?._id,
     };
     dispatch(addBlogs(formDataWithAuthor))
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllBlogsByAuthor, updateBlogs, deleteBlogs } from '../features/blog/blogSlice';
+import { getAllBlogsByAuthor, updateBlogs, deleteBlogs, resetState } from '../features/blog/blogSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import PageAuth from '../component/PageAuth';
 
@@ -30,9 +30,10 @@ const MyBlogs = () => {
         dispatch(deleteBlogs(blogId));
     };
 
-    const user = useSelector((state) => state.auth.user.user);
-    const authorId = user._id;
+    const user = useSelector((state) => state.auth.user?.user || {});
+    const authorId = user?._id || '';
     useEffect(() => {
+        dispatch(resetState());
         dispatch(getAllBlogsByAuthor(authorId));
     }, [authorId, dispatch]);
 

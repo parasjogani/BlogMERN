@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../features/auth/authSlice';
+import { login, resetState } from '../features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
@@ -18,17 +19,26 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(resetState())
     dispatch(login(formData))
   };
 
   const authstate = useSelector((state) => state)
   const { user, isLoading, isError, isSuccess } = authstate.auth
 
+
   useEffect(() => {
     if (isSuccess && user) {
-      navigate("/")
+      toast.success("Login Successfull")
+      setTimeout(()=>{
+        navigate("/myblogs")
+      }, 1000)
     } else {
       navigate("")
+    }
+
+    if (isError && !user) {
+      toast.error("Something goes wrong")
     }
   }, [user, isLoading, isError, isSuccess, navigate])
 
@@ -88,6 +98,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };

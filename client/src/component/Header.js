@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+
 
 const Header = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -13,8 +19,10 @@ const Header = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
+        dispatch(logout())
+        localStorage.removeItem("user")
         setIsLoggedIn(false);
+        navigate('/login')
     };
 
     return (
